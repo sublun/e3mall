@@ -51,9 +51,9 @@
 		<table schema="" tableName="tb_goods"></table>
 		<table schema="" tableName="tb_goods_image"></table>
 		<table schema="" tableName="tb_goods_storage"></table>
-		<table schema="" tableName="tb_item_cat"></table>
-		<table schema="" tableName="tb_item_param"></table>
-		<table schema="" tableName="tb_item_param_item"></table>
+		<table schema="" tableName="tb_goods_cat"></table>
+		<table schema="" tableName="tb_goods_param"></table>
+		<table schema="" tableName="tb_goods_param_item"></table>
 		<table schema="" tableName="tb_order"></table>
 		<table schema="" tableName="tb_order_item"></table>
 		<table schema="" tableName="tb_order_shipping"></table>
