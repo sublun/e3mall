@@ -1,17 +1,16 @@
 package cn.e3mall.mapper;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-
 import cn.e3mall.pojo.TbItemCat;
 import cn.e3mall.pojo.TbItemCatExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface TbItemCatMapper {
     int countByExample(TbItemCatExample example);
 
     int deleteByExample(TbItemCatExample example);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Long itemCatId);
 
     int insert(TbItemCat record);
 
@@ -19,7 +18,7 @@ public interface TbItemCatMapper {
 
     List<TbItemCat> selectByExample(TbItemCatExample example);
 
-    TbItemCat selectByPrimaryKey(Long id);
+    TbItemCat selectByPrimaryKey(Long itemCatId);
 
     int updateByExampleSelective(@Param("record") TbItemCat record, @Param("example") TbItemCatExample example);
 

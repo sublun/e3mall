@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.e3mall.mapper.TbContentMapper" >
   <resultMap id="BaseResultMap" type="cn.e3mall.pojo.TbContent" >
-    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="ad_id" property="adId" jdbcType="BIGINT" />
     <result column="category_id" property="categoryId" jdbcType="BIGINT" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
@@ -10,6 +10,7 @@
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="pic" property="pic" jdbcType="VARCHAR" />
     <result column="pic2" property="pic2" jdbcType="VARCHAR" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -75,7 +76,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, category_id, title, sub_title, title_desc, url, pic, pic2, created, updated
+    ad_id, category_id, title, sub_title, title_desc, url, pic, pic2, goods_id, created, 
+    updated
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -116,11 +118,11 @@
     ,
     <include refid="Blob_Column_List" />
     from tb_content
-    where id = #{id,jdbcType=BIGINT}
+    where ad_id = #{adId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tb_content
-    where id = #{id,jdbcType=BIGINT}
+    where ad_id = #{adId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="cn.e3mall.pojo.TbContentExample" >
     delete from tb_content
@@ -129,20 +131,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.e3mall.pojo.TbContent" >
-    insert into tb_content (id, category_id, title, 
+    insert into tb_content (ad_id, category_id, title, 
       sub_title, title_desc, url, 
-      pic, pic2, created, 
-      updated, content)
-    values (#{id,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
+      pic, pic2, goods_id, 
+      created, updated, content
+      )
+    values (#{adId,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
       #{subTitle,jdbcType=VARCHAR}, #{titleDesc,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
-      #{pic,jdbcType=VARCHAR}, #{pic2,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
-      #{updated,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+      #{pic,jdbcType=VARCHAR}, #{pic2,jdbcType=VARCHAR}, #{goodsId,jdbcType=BIGINT}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.e3mall.pojo.TbContent" >
     insert into tb_content
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+      <if test="adId != null" >
+        ad_id,
       </if>
       <if test="categoryId != null" >
         category_id,
@@ -165,6 +169,9 @@
       <if test="pic2 != null" >
         pic2,
       </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
       <if test="created != null" >
         created,
       </if>
@@ -176,8 +183,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
+      <if test="adId != null" >
+        #{adId,jdbcType=BIGINT},
       </if>
       <if test="categoryId != null" >
         #{categoryId,jdbcType=BIGINT},
@@ -200,6 +207,9 @@
       <if test="pic2 != null" >
         #{pic2,jdbcType=VARCHAR},
       </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
       </if>
@@ -220,8 +230,8 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update tb_content
     <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=BIGINT},
+      <if test="record.adId != null" >
+        ad_id = #{record.adId,jdbcType=BIGINT},
       </if>
       <if test="record.categoryId != null" >
         category_id = #{record.categoryId,jdbcType=BIGINT},
@@ -244,6 +254,9 @@
       <if test="record.pic2 != null" >
         pic2 = #{record.pic2,jdbcType=VARCHAR},
       </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=BIGINT},
+      </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
@@ -260,7 +273,7 @@
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update tb_content
-    set id = #{record.id,jdbcType=BIGINT},
+    set ad_id = #{record.adId,jdbcType=BIGINT},
       category_id = #{record.categoryId,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
       sub_title = #{record.subTitle,jdbcType=VARCHAR},
@@ -268,6 +281,7 @@
       url = #{record.url,jdbcType=VARCHAR},
       pic = #{record.pic,jdbcType=VARCHAR},
       pic2 = #{record.pic2,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=BIGINT},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
       content = #{record.content,jdbcType=LONGVARCHAR}
@@ -277,7 +291,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update tb_content
-    set id = #{record.id,jdbcType=BIGINT},
+    set ad_id = #{record.adId,jdbcType=BIGINT},
       category_id = #{record.categoryId,jdbcType=BIGINT},
       title = #{record.title,jdbcType=VARCHAR},
       sub_title = #{record.subTitle,jdbcType=VARCHAR},
@@ -285,6 +299,7 @@
       url = #{record.url,jdbcType=VARCHAR},
       pic = #{record.pic,jdbcType=VARCHAR},
       pic2 = #{record.pic2,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=BIGINT},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -315,6 +330,9 @@
       <if test="pic2 != null" >
         pic2 = #{pic2,jdbcType=VARCHAR},
       </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
       </if>
@@ -325,7 +343,7 @@
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where ad_id = #{adId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.e3mall.pojo.TbContent" >
     update tb_content
@@ -336,10 +354,11 @@
       url = #{url,jdbcType=VARCHAR},
       pic = #{pic,jdbcType=VARCHAR},
       pic2 = #{pic2,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=BIGINT},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
       content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=BIGINT}
+    where ad_id = #{adId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.e3mall.pojo.TbContent" >
     update tb_content
@@ -350,8 +369,9 @@
       url = #{url,jdbcType=VARCHAR},
       pic = #{pic,jdbcType=VARCHAR},
       pic2 = #{pic2,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=BIGINT},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
+    where ad_id = #{adId,jdbcType=BIGINT}
   </update>
 </mapper>

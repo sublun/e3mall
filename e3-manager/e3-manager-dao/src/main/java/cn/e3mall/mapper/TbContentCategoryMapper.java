@@ -1,17 +1,16 @@
 package cn.e3mall.mapper;
 
-import java.util.List;
-import org.apache.ibatis.annotations.Param;
-
 import cn.e3mall.pojo.TbContentCategory;
 import cn.e3mall.pojo.TbContentCategoryExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface TbContentCategoryMapper {
     int countByExample(TbContentCategoryExample example);
 
     int deleteByExample(TbContentCategoryExample example);
 
-    int deleteByPrimaryKey(Long id);
+    int deleteByPrimaryKey(Long categoryId);
 
     int insert(TbContentCategory record);
 
@@ -19,7 +18,7 @@ public interface TbContentCategoryMapper {
 
     List<TbContentCategory> selectByExample(TbContentCategoryExample example);
 
-    TbContentCategory selectByPrimaryKey(Long id);
+    TbContentCategory selectByPrimaryKey(Long categoryId);
 
     int updateByExampleSelective(@Param("record") TbContentCategory record, @Param("example") TbContentCategoryExample example);
 

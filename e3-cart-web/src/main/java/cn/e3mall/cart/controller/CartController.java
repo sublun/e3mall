@@ -52,7 +52,7 @@ public class CartController {
 		Object user = request.getAttribute("user");
 		//用户已经登录则使用购物车服务
 		if (user != null) {
-			cartService.addCart(((TbUser)user).getId(), itemId, num);
+			cartService.addCart(((TbUser)user).getUserId(), itemId, num);
 			return "cartSuccess";
 		}
 		//用户未登录状态使用cookie保存购物车信息
@@ -104,12 +104,12 @@ public class CartController {
 			//判断cookie中是否有购物车信息
 			if (!cartList.isEmpty()) {
 				//将购物车同步到服务端
-				cartService.mergeCartItem(((TbUser)user).getId(), cartList);
+				cartService.mergeCartItem(((TbUser)user).getUserId(), cartList);
 				//将cookie中的购物车信息删除
 				CookieUtils.setCookie(request, response, CART_KEY, "", 0);
 			}
 			//从服务端取购物车商品列表
-			cartList = cartService.getCartList(((TbUser)user).getId());
+			cartList = cartService.getCartList(((TbUser)user).getUserId());
 			
 		}
 		//把商品列表传递给页面
@@ -131,7 +131,7 @@ public class CartController {
 		Object user = request.getAttribute("user");
 		//用户已经登录则使用购物车服务
 		if (user != null) {
-			E3Result result = cartService.updateItemNum(((TbUser)user).getId(), itemId, num);
+			E3Result result = cartService.updateItemNum(((TbUser)user).getUserId(), itemId, num);
 			return result;
 		}
 		//从cookie中取购物车列表
@@ -158,7 +158,7 @@ public class CartController {
 		Object user = request.getAttribute("user");
 		//用户已经登录则使用购物车服务
 		if (user != null) {
-			E3Result result = cartService.deleteCartItem(((TbUser)user).getId(), itemId);
+			E3Result result = cartService.deleteCartItem(((TbUser)user).getUserId(), itemId);
 			return "redirect:/cart/cart.html";
 		}
 		//从cookie中取购物车列表

@@ -3,7 +3,7 @@ package cn.e3mall.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TbOrder implements Serializable{
+public class TbOrder implements Serializable {
     private String orderId;
 
     private String payment;
@@ -37,6 +37,8 @@ public class TbOrder implements Serializable{
     private String buyerNick;
 
     private Integer buyerRate;
+
+    private static final long serialVersionUID = 1L;
 
     public String getOrderId() {
         return orderId;

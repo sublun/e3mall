@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.e3mall.mapper.TbContentCategoryMapper" >
   <resultMap id="BaseResultMap" type="cn.e3mall.pojo.TbContentCategory" >
-    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="space_code" property="spaceCode" jdbcType="VARCHAR" />
     <result column="parent_id" property="parentId" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
@@ -70,7 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, parent_id, name, status, sort_order, is_parent, created, updated
+    category_id, space_code, parent_id, name, status, sort_order, is_parent, created, 
+    updated
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.e3mall.pojo.TbContentCategoryExample" >
     select
@@ -90,11 +92,11 @@
     select 
     <include refid="Base_Column_List" />
     from tb_content_category
-    where id = #{id,jdbcType=BIGINT}
+    where category_id = #{categoryId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tb_content_category
-    where id = #{id,jdbcType=BIGINT}
+    where category_id = #{categoryId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="cn.e3mall.pojo.TbContentCategoryExample" >
     delete from tb_content_category
@@ -103,24 +105,23 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.e3mall.pojo.TbContentCategory" >
-    <selectKey keyProperty="id" resultType="long" order="AFTER">
-    	select last_insert_id()
-    </selectKey>
-    insert into tb_content_category (id, parent_id, name, 
-      status, sort_order, is_parent, 
-      created, updated)
-    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, #{isParent,jdbcType=BIT}, 
-      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
+    insert into tb_content_category (category_id, space_code, parent_id, 
+      name, status, sort_order, 
+      is_parent, created, updated
+      )
+    values (#{categoryId,jdbcType=BIGINT}, #{spaceCode,jdbcType=VARCHAR}, #{parentId,jdbcType=BIGINT}, 
+      #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, 
+      #{isParent,jdbcType=BIT}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.e3mall.pojo.TbContentCategory" >
-    <selectKey keyProperty="id" resultType="long" order="AFTER">
-    	select last_insert_id()
-    </selectKey>
     insert into tb_content_category
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="spaceCode != null" >
+        space_code,
       </if>
       <if test="parentId != null" >
         parent_id,
@@ -145,8 +146,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="spaceCode != null" >
+        #{spaceCode,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null" >
         #{parentId,jdbcType=BIGINT},
@@ -180,8 +184,11 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update tb_content_category
     <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=BIGINT},
+      <if test="record.categoryId != null" >
+        category_id = #{record.categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.spaceCode != null" >
+        space_code = #{record.spaceCode,jdbcType=VARCHAR},
       </if>
       <if test="record.parentId != null" >
         parent_id = #{record.parentId,jdbcType=BIGINT},
@@ -211,7 +218,8 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update tb_content_category
-    set id = #{record.id,jdbcType=BIGINT},
+    set category_id = #{record.categoryId,jdbcType=BIGINT},
+      space_code = #{record.spaceCode,jdbcType=VARCHAR},
       parent_id = #{record.parentId,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
@@ -226,6 +234,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.e3mall.pojo.TbContentCategory" >
     update tb_content_category
     <set >
+      <if test="spaceCode != null" >
+        space_code = #{spaceCode,jdbcType=VARCHAR},
+      </if>
       <if test="parentId != null" >
         parent_id = #{parentId,jdbcType=BIGINT},
       </if>
@@ -248,17 +259,18 @@
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where category_id = #{categoryId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.e3mall.pojo.TbContentCategory" >
     update tb_content_category
-    set parent_id = #{parentId,jdbcType=BIGINT},
+    set space_code = #{spaceCode,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
       name = #{name,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       sort_order = #{sortOrder,jdbcType=INTEGER},
       is_parent = #{isParent,jdbcType=BIT},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
+    where category_id = #{categoryId,jdbcType=BIGINT}
   </update>
 </mapper>

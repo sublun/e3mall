@@ -40,7 +40,7 @@ public class ContentCategoryServiceImpl implements ContentCategoryService {
 		List<EasyUITreeNode> resultList = new ArrayList<>();
 		for (TbContentCategory tbContentCategory : list) {
 			EasyUITreeNode node = new EasyUITreeNode();
-			node.setId(tbContentCategory.getId());
+			node.setId(tbContentCategory.getCategoryId());
 			node.setText(tbContentCategory.getName());
 			node.setState(tbContentCategory.getIsParent()?"closed":"open");
 			//添加到列表

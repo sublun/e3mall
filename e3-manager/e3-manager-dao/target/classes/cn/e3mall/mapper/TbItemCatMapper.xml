@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.e3mall.mapper.TbItemCatMapper" >
   <resultMap id="BaseResultMap" type="cn.e3mall.pojo.TbItemCat" >
-    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="item_cat_id" property="itemCatId" jdbcType="BIGINT" />
     <result column="parent_id" property="parentId" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
@@ -70,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, parent_id, name, status, sort_order, is_parent, created, updated
+    item_cat_id, parent_id, name, status, sort_order, is_parent, created, updated
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.e3mall.pojo.TbItemCatExample" >
     select
@@ -90,11 +90,11 @@
     select 
     <include refid="Base_Column_List" />
     from tb_item_cat
-    where id = #{id,jdbcType=BIGINT}
+    where item_cat_id = #{itemCatId,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from tb_item_cat
-    where id = #{id,jdbcType=BIGINT}
+    where item_cat_id = #{itemCatId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="cn.e3mall.pojo.TbItemCatExample" >
     delete from tb_item_cat
@@ -103,18 +103,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.e3mall.pojo.TbItemCat" >
-    insert into tb_item_cat (id, parent_id, name, 
+    insert into tb_item_cat (item_cat_id, parent_id, name, 
       status, sort_order, is_parent, 
       created, updated)
-    values (#{id,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+    values (#{itemCatId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{sortOrder,jdbcType=INTEGER}, #{isParent,jdbcType=BIT}, 
       #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.e3mall.pojo.TbItemCat" >
     insert into tb_item_cat
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
+      <if test="itemCatId != null" >
+        item_cat_id,
       </if>
       <if test="parentId != null" >
         parent_id,
@@ -139,8 +139,8 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
+      <if test="itemCatId != null" >
+        #{itemCatId,jdbcType=BIGINT},
       </if>
       <if test="parentId != null" >
         #{parentId,jdbcType=BIGINT},
@@ -174,8 +174,8 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update tb_item_cat
     <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=BIGINT},
+      <if test="record.itemCatId != null" >
+        item_cat_id = #{record.itemCatId,jdbcType=BIGINT},
       </if>
       <if test="record.parentId != null" >
         parent_id = #{record.parentId,jdbcType=BIGINT},
@@ -205,7 +205,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update tb_item_cat
-    set id = #{record.id,jdbcType=BIGINT},
+    set item_cat_id = #{record.itemCatId,jdbcType=BIGINT},
       parent_id = #{record.parentId,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
@@ -242,7 +242,7 @@
         updated = #{updated,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=BIGINT}
+    where item_cat_id = #{itemCatId,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.e3mall.pojo.TbItemCat" >
     update tb_item_cat
@@ -253,6 +253,6 @@
       is_parent = #{isParent,jdbcType=BIT},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=BIGINT}
+    where item_cat_id = #{itemCatId,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -72,7 +72,7 @@ public class OrderController {
 	public String createOrder(HttpServletRequest request, OrderInfo orderInfo, Model model) {
 		//取用户信息
 		TbUser user = (TbUser) request.getAttribute("user");
-		orderInfo.setUserId(user.getId());
+		orderInfo.setUserId(user.getUserId());
 		orderInfo.setBuyerNick(user.getUsername());
 		//业务处理
 		E3Result e3Result = orderService.createOrder(orderInfo);

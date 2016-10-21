@@ -3,8 +3,8 @@ package cn.e3mall.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TbUser implements Serializable{
-    private Long id;
+public class TbUser implements Serializable {
+    private Long userId;
 
     private String username;
 
@@ -18,12 +18,14 @@ public class TbUser implements Serializable{
 
     private Date updated;
 
-    public Long getId() {
-        return id;
+    private static final long serialVersionUID = 1L;
+
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {

@@ -3,8 +3,10 @@ package cn.e3mall.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TbContentCategory implements Serializable{
-    private Long id;
+public class TbContentCategory implements Serializable {
+    private Long categoryId;
+
+    private String spaceCode;
 
     private Long parentId;
 
@@ -20,12 +22,22 @@ public class TbContentCategory implements Serializable{
 
     private Date updated;
 
-    public Long getId() {
-        return id;
+    private static final long serialVersionUID = 1L;
+
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getSpaceCode() {
+        return spaceCode;
+    }
+
+    public void setSpaceCode(String spaceCode) {
+        this.spaceCode = spaceCode == null ? null : spaceCode.trim();
     }
 
     public Long getParentId() {

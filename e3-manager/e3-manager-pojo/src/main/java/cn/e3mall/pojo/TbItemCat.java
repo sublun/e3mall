@@ -3,8 +3,8 @@ package cn.e3mall.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TbItemCat implements Serializable{
-    private Long id;
+public class TbItemCat implements Serializable {
+    private Long itemCatId;
 
     private Long parentId;
 
@@ -20,12 +20,14 @@ public class TbItemCat implements Serializable{
 
     private Date updated;
 
-    public Long getId() {
-        return id;
+    private static final long serialVersionUID = 1L;
+
+    public Long getItemCatId() {
+        return itemCatId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setItemCatId(Long itemCatId) {
+        this.itemCatId = itemCatId;
     }
 
     public Long getParentId() {

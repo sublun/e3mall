@@ -3,7 +3,7 @@
 <mapper namespace="cn.e3mall.mapper.TbItemParamItemMapper" >
   <resultMap id="BaseResultMap" type="cn.e3mall.pojo.TbItemParamItem" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="item_id" property="itemId" jdbcType="BIGINT" />
+    <result column="prod_id" property="prodId" jdbcType="BIGINT" />
     <result column="created" property="created" jdbcType="TIMESTAMP" />
     <result column="updated" property="updated" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -69,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, item_id, created, updated
+    id, prod_id, created, updated
   </sql>
   <sql id="Blob_Column_List" >
     param_data
@@ -123,9 +123,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.e3mall.pojo.TbItemParamItem" >
-    insert into tb_item_param_item (id, item_id, created, 
+    insert into tb_item_param_item (id, prod_id, created, 
       updated, param_data)
-    values (#{id,jdbcType=BIGINT}, #{itemId,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=BIGINT}, #{prodId,jdbcType=BIGINT}, #{created,jdbcType=TIMESTAMP}, 
       #{updated,jdbcType=TIMESTAMP}, #{paramData,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.e3mall.pojo.TbItemParamItem" >
@@ -134,8 +134,8 @@
       <if test="id != null" >
         id,
       </if>
-      <if test="itemId != null" >
-        item_id,
+      <if test="prodId != null" >
+        prod_id,
       </if>
       <if test="created != null" >
         created,
@@ -151,8 +151,8 @@
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="itemId != null" >
-        #{itemId,jdbcType=BIGINT},
+      <if test="prodId != null" >
+        #{prodId,jdbcType=BIGINT},
       </if>
       <if test="created != null" >
         #{created,jdbcType=TIMESTAMP},
@@ -177,8 +177,8 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.itemId != null" >
-        item_id = #{record.itemId,jdbcType=BIGINT},
+      <if test="record.prodId != null" >
+        prod_id = #{record.prodId,jdbcType=BIGINT},
       </if>
       <if test="record.created != null" >
         created = #{record.created,jdbcType=TIMESTAMP},
@@ -197,7 +197,7 @@
   <update id="updateByExampleWithBLOBs" parameterType="map" >
     update tb_item_param_item
     set id = #{record.id,jdbcType=BIGINT},
-      item_id = #{record.itemId,jdbcType=BIGINT},
+      prod_id = #{record.prodId,jdbcType=BIGINT},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP},
       param_data = #{record.paramData,jdbcType=LONGVARCHAR}
@@ -208,7 +208,7 @@
   <update id="updateByExample" parameterType="map" >
     update tb_item_param_item
     set id = #{record.id,jdbcType=BIGINT},
-      item_id = #{record.itemId,jdbcType=BIGINT},
+      prod_id = #{record.prodId,jdbcType=BIGINT},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
@@ -218,8 +218,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.e3mall.pojo.TbItemParamItem" >
     update tb_item_param_item
     <set >
-      <if test="itemId != null" >
-        item_id = #{itemId,jdbcType=BIGINT},
+      <if test="prodId != null" >
+        prod_id = #{prodId,jdbcType=BIGINT},
       </if>
       <if test="created != null" >
         created = #{created,jdbcType=TIMESTAMP},
@@ -235,7 +235,7 @@
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.e3mall.pojo.TbItemParamItem" >
     update tb_item_param_item
-    set item_id = #{itemId,jdbcType=BIGINT},
+    set prod_id = #{prodId,jdbcType=BIGINT},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP},
       param_data = #{paramData,jdbcType=LONGVARCHAR}
@@ -243,7 +243,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.e3mall.pojo.TbItemParamItem" >
     update tb_item_param_item
-    set item_id = #{itemId,jdbcType=BIGINT},
+    set prod_id = #{prodId,jdbcType=BIGINT},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

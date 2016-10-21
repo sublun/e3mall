@@ -41,7 +41,7 @@ public class ItemCatServiceImpl implements ItemCatService {
 		for (TbItemCat tbItemCat : list) {
 			Map node = new HashMap<>();
 			//id
-			node.put("id", tbItemCat.getId());
+			node.put("id", tbItemCat.getItemCatId());
 			//text
 			node.put("text", tbItemCat.getName());
 			//state

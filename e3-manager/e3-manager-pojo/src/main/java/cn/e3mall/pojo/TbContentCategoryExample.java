@@ -105,63 +105,133 @@ public class TbContentCategoryExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andIdIsNull() {
-            addCriterion("id is null");
+        public Criteria andCategoryIdIsNull() {
+            addCriterion("category_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andIdIsNotNull() {
-            addCriterion("id is not null");
+        public Criteria andCategoryIdIsNotNull() {
+            addCriterion("category_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Long value) {
-            addCriterion("id =", value, "id");
+        public Criteria andCategoryIdEqualTo(Long value) {
+            addCriterion("category_id =", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Long value) {
-            addCriterion("id <>", value, "id");
+        public Criteria andCategoryIdNotEqualTo(Long value) {
+            addCriterion("category_id <>", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Long value) {
-            addCriterion("id >", value, "id");
+        public Criteria andCategoryIdGreaterThan(Long value) {
+            addCriterion("category_id >", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("id >=", value, "id");
+        public Criteria andCategoryIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("category_id >=", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Long value) {
-            addCriterion("id <", value, "id");
+        public Criteria andCategoryIdLessThan(Long value) {
+            addCriterion("category_id <", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Long value) {
-            addCriterion("id <=", value, "id");
+        public Criteria andCategoryIdLessThanOrEqualTo(Long value) {
+            addCriterion("category_id <=", value, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Long> values) {
-            addCriterion("id in", values, "id");
+        public Criteria andCategoryIdIn(List<Long> values) {
+            addCriterion("category_id in", values, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Long> values) {
-            addCriterion("id not in", values, "id");
+        public Criteria andCategoryIdNotIn(List<Long> values) {
+            addCriterion("category_id not in", values, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Long value1, Long value2) {
-            addCriterion("id between", value1, value2, "id");
+        public Criteria andCategoryIdBetween(Long value1, Long value2) {
+            addCriterion("category_id between", value1, value2, "categoryId");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Long value1, Long value2) {
-            addCriterion("id not between", value1, value2, "id");
+        public Criteria andCategoryIdNotBetween(Long value1, Long value2) {
+            addCriterion("category_id not between", value1, value2, "categoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeIsNull() {
+            addCriterion("space_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeIsNotNull() {
+            addCriterion("space_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeEqualTo(String value) {
+            addCriterion("space_code =", value, "spaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeNotEqualTo(String value) {
+            addCriterion("space_code <>", value, "spaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeGreaterThan(String value) {
+            addCriterion("space_code >", value, "spaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("space_code >=", value, "spaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeLessThan(String value) {
+            addCriterion("space_code <", value, "spaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeLessThanOrEqualTo(String value) {
+            addCriterion("space_code <=", value, "spaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeLike(String value) {
+            addCriterion("space_code like", value, "spaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeNotLike(String value) {
+            addCriterion("space_code not like", value, "spaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeIn(List<String> values) {
+            addCriterion("space_code in", values, "spaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeNotIn(List<String> values) {
+            addCriterion("space_code not in", values, "spaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeBetween(String value1, String value2) {
+            addCriterion("space_code between", value1, value2, "spaceCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andSpaceCodeNotBetween(String value1, String value2) {
+            addCriterion("space_code not between", value1, value2, "spaceCode");
             return (Criteria) this;
         }
 
