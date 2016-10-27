@@ -3,7 +3,7 @@ package cn.e3mall.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TbItemCat implements Serializable {
+public class TbGoodsCat implements Serializable {
     private Long itemCatId;
 
     private Long parentId;

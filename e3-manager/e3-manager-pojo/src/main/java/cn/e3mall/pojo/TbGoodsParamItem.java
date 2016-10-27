@@ -3,7 +3,7 @@ package cn.e3mall.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
-public class TbItemParamItem implements Serializable {
+public class TbGoodsParamItem implements Serializable {
     private Long id;
 
     private Long prodId;

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TbItemDescExample {
+public class TbGoodsParamItemExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public TbItemDescExample() {
+    public TbGoodsParamItemExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -105,63 +105,123 @@ public class TbItemDescExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andItemIdIsNull() {
-            addCriterion("item_id is null");
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
             return (Criteria) this;
         }
 
-        public Criteria andItemIdIsNotNull() {
-            addCriterion("item_id is not null");
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andItemIdEqualTo(Long value) {
-            addCriterion("item_id =", value, "itemId");
+        public Criteria andIdEqualTo(Long value) {
+            addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andItemIdNotEqualTo(Long value) {
-            addCriterion("item_id <>", value, "itemId");
+        public Criteria andIdNotEqualTo(Long value) {
+            addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andItemIdGreaterThan(Long value) {
-            addCriterion("item_id >", value, "itemId");
+        public Criteria andIdGreaterThan(Long value) {
+            addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andItemIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("item_id >=", value, "itemId");
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andItemIdLessThan(Long value) {
-            addCriterion("item_id <", value, "itemId");
+        public Criteria andIdLessThan(Long value) {
+            addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andItemIdLessThanOrEqualTo(Long value) {
-            addCriterion("item_id <=", value, "itemId");
+        public Criteria andIdLessThanOrEqualTo(Long value) {
+            addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andItemIdIn(List<Long> values) {
-            addCriterion("item_id in", values, "itemId");
+        public Criteria andIdIn(List<Long> values) {
+            addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andItemIdNotIn(List<Long> values) {
-            addCriterion("item_id not in", values, "itemId");
+        public Criteria andIdNotIn(List<Long> values) {
+            addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andItemIdBetween(Long value1, Long value2) {
-            addCriterion("item_id between", value1, value2, "itemId");
+        public Criteria andIdBetween(Long value1, Long value2) {
+            addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andItemIdNotBetween(Long value1, Long value2) {
-            addCriterion("item_id not between", value1, value2, "itemId");
+        public Criteria andIdNotBetween(Long value1, Long value2) {
+            addCriterion("id not between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andProdIdIsNull() {
+            addCriterion("prod_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProdIdIsNotNull() {
+            addCriterion("prod_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProdIdEqualTo(Long value) {
+            addCriterion("prod_id =", value, "prodId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProdIdNotEqualTo(Long value) {
+            addCriterion("prod_id <>", value, "prodId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProdIdGreaterThan(Long value) {
+            addCriterion("prod_id >", value, "prodId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProdIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("prod_id >=", value, "prodId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProdIdLessThan(Long value) {
+            addCriterion("prod_id <", value, "prodId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProdIdLessThanOrEqualTo(Long value) {
+            addCriterion("prod_id <=", value, "prodId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProdIdIn(List<Long> values) {
+            addCriterion("prod_id in", values, "prodId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProdIdNotIn(List<Long> values) {
+            addCriterion("prod_id not in", values, "prodId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProdIdBetween(Long value1, Long value2) {
+            addCriterion("prod_id between", value1, value2, "prodId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProdIdNotBetween(Long value1, Long value2) {
+            addCriterion("prod_id not between", value1, value2, "prodId");
             return (Criteria) this;
         }
 

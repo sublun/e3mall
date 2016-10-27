@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class TbItemParamItemExample {
+public class TbGoodsParamExample {
     protected String orderByClause;
 
     protected boolean distinct;
 
     protected List<Criteria> oredCriteria;
 
-    public TbItemParamItemExample() {
+    public TbGoodsParamExample() {
         oredCriteria = new ArrayList<Criteria>();
     }
 
@@ -165,63 +165,63 @@ public class TbItemParamItemExample {
             return (Criteria) this;
         }
 
-        public Criteria andProdIdIsNull() {
-            addCriterion("prod_id is null");
+        public Criteria andItemCatIdIsNull() {
+            addCriterion("item_cat_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andProdIdIsNotNull() {
-            addCriterion("prod_id is not null");
+        public Criteria andItemCatIdIsNotNull() {
+            addCriterion("item_cat_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProdIdEqualTo(Long value) {
-            addCriterion("prod_id =", value, "prodId");
+        public Criteria andItemCatIdEqualTo(Long value) {
+            addCriterion("item_cat_id =", value, "itemCatId");
             return (Criteria) this;
         }
 
-        public Criteria andProdIdNotEqualTo(Long value) {
-            addCriterion("prod_id <>", value, "prodId");
+        public Criteria andItemCatIdNotEqualTo(Long value) {
+            addCriterion("item_cat_id <>", value, "itemCatId");
             return (Criteria) this;
         }
 
-        public Criteria andProdIdGreaterThan(Long value) {
-            addCriterion("prod_id >", value, "prodId");
+        public Criteria andItemCatIdGreaterThan(Long value) {
+            addCriterion("item_cat_id >", value, "itemCatId");
             return (Criteria) this;
         }
 
-        public Criteria andProdIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("prod_id >=", value, "prodId");
+        public Criteria andItemCatIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("item_cat_id >=", value, "itemCatId");
             return (Criteria) this;
         }
 
-        public Criteria andProdIdLessThan(Long value) {
-            addCriterion("prod_id <", value, "prodId");
+        public Criteria andItemCatIdLessThan(Long value) {
+            addCriterion("item_cat_id <", value, "itemCatId");
             return (Criteria) this;
         }
 
-        public Criteria andProdIdLessThanOrEqualTo(Long value) {
-            addCriterion("prod_id <=", value, "prodId");
+        public Criteria andItemCatIdLessThanOrEqualTo(Long value) {
+            addCriterion("item_cat_id <=", value, "itemCatId");
             return (Criteria) this;
         }
 
-        public Criteria andProdIdIn(List<Long> values) {
-            addCriterion("prod_id in", values, "prodId");
+        public Criteria andItemCatIdIn(List<Long> values) {
+            addCriterion("item_cat_id in", values, "itemCatId");
             return (Criteria) this;
         }
 
-        public Criteria andProdIdNotIn(List<Long> values) {
-            addCriterion("prod_id not in", values, "prodId");
+        public Criteria andItemCatIdNotIn(List<Long> values) {
+            addCriterion("item_cat_id not in", values, "itemCatId");
             return (Criteria) this;
         }
 
-        public Criteria andProdIdBetween(Long value1, Long value2) {
-            addCriterion("prod_id between", value1, value2, "prodId");
+        public Criteria andItemCatIdBetween(Long value1, Long value2) {
+            addCriterion("item_cat_id between", value1, value2, "itemCatId");
             return (Criteria) this;
         }
 
-        public Criteria andProdIdNotBetween(Long value1, Long value2) {
-            addCriterion("prod_id not between", value1, value2, "prodId");
+        public Criteria andItemCatIdNotBetween(Long value1, Long value2) {
+            addCriterion("item_cat_id not between", value1, value2, "itemCatId");
             return (Criteria) this;
         }
 
