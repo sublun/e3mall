@@ -12,8 +12,11 @@ import cn.e3mall.common.pojo.E3Result;
 import cn.e3mall.common.utils.JsonUtils;
 import cn.e3mall.content.service.ContentService;
 import cn.e3mall.jedis.JedisClient;
+import cn.e3mall.mapper.TbContentCategoryMapper;
 import cn.e3mall.mapper.TbContentMapper;
 import cn.e3mall.pojo.TbContent;
+import cn.e3mall.pojo.TbContentCategory;
+import cn.e3mall.pojo.TbContentCategoryExample;
 import cn.e3mall.pojo.TbContentExample;
 import cn.e3mall.pojo.TbContentExample.Criteria;
 import sun.tools.jar.resources.jar;
@@ -30,6 +33,9 @@ public class ContentServiceImpl implements ContentService {
 
 	@Autowired
 	private TbContentMapper contentMapper;
+	@Autowired
+	private TbContentCategoryMapper contentCategoryMapper;
+	
 	@Autowired
 	private JedisClient jedisClient;
 	
@@ -50,11 +56,11 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public List<TbContent> getContentList(Long cid) {
+	public List<TbContent> getContentList(String spaceCode) {
 		//先查询缓存
 		//添加缓存不能影响正常业务逻辑
 		try {
-			String result = jedisClient.hget(CONTENT_KEY, cid + "");
+			String result = jedisClient.hget(CONTENT_KEY, spaceCode);
 			//判断是否查询到数据
 			if (StringUtils.isNotBlank(result)) {
 				//把json转换成java对象
@@ -65,15 +71,26 @@ public class ContentServiceImpl implements ContentService {
 			e.printStackTrace();
 		}
 		//缓存中没有查询数据库
-		//根据cid查询内容列表
-		TbContentExample example = new TbContentExample();
-		Criteria criteria = example.createCriteria();
-		criteria.andCategoryIdEqualTo(cid);
+		//根据spaceCode查询cid
+		TbContentCategoryExample example  = new TbContentCategoryExample();
+		cn.e3mall.pojo.TbContentCategoryExample.Criteria catCriteria = example.createCriteria();
+		catCriteria.andSpaceCodeEqualTo(spaceCode);
+		List<TbContentCategory> catList = contentCategoryMapper.selectByExample(example);
+		//spaceCode错误，没有查询到对应的分类id
+		if (catList == null || catList.size() == 0) {
+			return null;
+		}
+		TbContentCategory contentCategory = catList.get(0);
+		Long categoryId = contentCategory.getCategoryId();
+		//根据cid查询
+		TbContentExample contentExample = new TbContentExample();
+		Criteria criteria = contentExample.createCriteria();
+		criteria.andCategoryIdEqualTo(categoryId);
 		//执行查询
-		List<TbContent> list = contentMapper.selectByExampleWithBLOBs(example);
+		List<TbContent> list = contentMapper.selectByExampleWithBLOBs(contentExample);
 		//把结果添加到缓存
 		try {
-			jedisClient.hset(CONTENT_KEY, cid+"", JsonUtils.objectToJson(list));
+			jedisClient.hset(CONTENT_KEY, spaceCode, JsonUtils.objectToJson(list));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

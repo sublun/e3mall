@@ -2708,11 +2708,11 @@ $(function(){
 					$(this).find(".gBtn").hide();
 				}else{
 					$(this).find(".gBtn").show();
-					$(this).find(".gBtn").animate({top:"225px"},200);
+					$(this).find(".gBtn").animate({top:"264px"},200);
 				}	
 			},
 			outEvent: function(){
-			    $(this).find(".gBtn").animate({top:"260px"},300);
+			    $(this).find(".gBtn").animate({top:"299px"},300);
 			}   
 		});	
 	});
@@ -2724,11 +2724,11 @@ $(function(){
 					$(this).find(".gBtn").hide();
 				}else{
 					$(this).find(".gBtn").show();
-					$(this).find(".gBtn").animate({top:"168px"},200);
+					$(this).find(".gBtn").animate({top:"264px"},200);
 				}	
 			},
 			outEvent: function(){
-			    $(this).find(".gBtn").animate({top:"210px"},300);
+			    $(this).find(".gBtn").animate({top:"299px"},300);
 			}   
 		});	
 	});

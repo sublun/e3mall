@@ -57,17 +57,18 @@
 .bestbuy h2{ color:#333333; font-weight:normal; font-size:18px; font-family:Microsoft YaHei; padding:0 0 12px 3px;}
 .bestbuy h2 span{ margin:0 0 0 15px; overflow:hidden; background:url(../images/index_icon_new.png) no-repeat -29px -333px; height:14px; width:118px; display:inline-block; }
 .bestbuy .bbig{ border-left:1px solid #e8e8e8;  float:left; display:block; width:944px;}
-.bestbuy .bbig li{ position:relative; height:258px; float:left;border-top:1px solid #e8e8e8;border-bottom:1px solid #e8e8e8; width:25%; overflow:hidden}
+.bestbuy .bbig li{ position:relative; height:298px; float:left;border-top:1px solid #e8e8e8;border-bottom:1px solid #e8e8e8; width:25%; overflow:hidden}
 .bestbuy .bbig li img{ width:235px; height:258px; border-right:1px solid #e8e8e8;}
 .bestbuy .bsmall{border-left:1px solid #e8e8e8; border-bottom:1px solid #e8e8e8; float:left; width:944px;}
-.bestbuy .bsmall li{position:relative;height:200px; float:left; overflow:hidden; width:25%;}
-.bestbuy .bsmall li img{ width:235px; height:200px; border-right:1px solid #e8e8e8;}
-.bestbuy .bprice{position:absolute; top:70px; color:#FF4700; left:20px; font: bold 16px/18px Microsoft YaHei;}
+.bestbuy .bsmall li{position:relative;height:298px; float:left; overflow:hidden; width:25%;}
+.bestbuy .bsmall li img{ width:235px; height:258px; border-right:1px solid #e8e8e8;}
+.bestbuy .bprice{/* position:absolute; */ top:70px; color:#FF4700; left:20px; font: bold 16px/18px Microsoft YaHei;border-right:1px solid #e8e8e8;padding-left: 10px;}
 .bestbuy .bprice span{ font-size:12px;}
+.bestbuy .btitle{/* position:absolute; */ top:15px; color:#666; left:20px; font: 14px/16px Microsoft YaHei;border-right:1px solid #e8e8e8;padding-left: 10px;padding-right: 10px;}
 .bbtn{position:absolute;width:160px;height:24px; border-radius:2px;background:#76ac25;filter:alpha(opacity=95);-moz-opacity:0.95;opacity:0.95;top:260px;cursor:pointer; margin-left:38px; left:0;}
 .bbtn a{ width:60px; margin:0 auto;height:24px;display:block;background:url(../images/indexsprite.png) no-repeat -66px -177px;line-height:24px;font-family:Microsoft YaHei;font-size:12px;color:#fff;text-decoration:none; padding-left:20px;}
 .bbtn a:hover{text-decoration:none;}
-.rSide1{margin-top:26px;float:right; border:1px solid #E8E8E8;width:222px;height:459px;_height:459px;*margin-top:36px;_margin-top:39px; overflow:hidden;}
+.rSide1{margin-top:26px;float:right; border:1px solid #E8E8E8;width:222px;height:597px;_height:459px;*margin-top:36px;_margin-top:39px; overflow:hidden;}
 .rImg2{height:300px;width:222px; text-align:center;overflow:hidden;}
 .rImg2 img{height:300px;width:220px;}
 .sfNews{ margin:0 auto; width:202px; overflow:hidden;}

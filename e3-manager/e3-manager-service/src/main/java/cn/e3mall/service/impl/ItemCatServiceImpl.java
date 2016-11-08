@@ -1,17 +1,12 @@
 package cn.e3mall.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.e3mall.mapper.TbItemCatMapper;
-import cn.e3mall.pojo.TbItemCat;
-import cn.e3mall.pojo.TbItemCatExample;
-import cn.e3mall.pojo.TbItemCatExample.Criteria;
+import cn.e3mall.mapper.TbGoodsCatMapper;
 import cn.e3mall.service.ItemCatService;
 
 /**
@@ -25,11 +20,11 @@ import cn.e3mall.service.ItemCatService;
 public class ItemCatServiceImpl implements ItemCatService {
 
 	@Autowired
-	private TbItemCatMapper itemCatMapper;
+	private TbGoodsCatMapper goodsCatMapper;
 	
 	@Override
 	public List<Map> getItemCatList(long parentId) {
-		//根据parentId查询子节点列表 
+		/*//根据parentId查询子节点列表 
 		TbItemCatExample example = new TbItemCatExample();
 		//设置查询条件
 		Criteria criteria = example.createCriteria();
@@ -49,7 +44,8 @@ public class ItemCatServiceImpl implements ItemCatService {
 			//添加到列表
 			resultList.add(node);
 		}
-		return resultList;
+		return resultList;*/
+		return null;
 	}
 
 }

@@ -8,5 +8,5 @@ import cn.e3mall.pojo.TbContent;
 public interface ContentService {
 
 	E3Result addContent(TbContent content);
-	List<TbContent> getContentList(Long cid);
+	List<TbContent> getContentList(String spaceCode);
 }

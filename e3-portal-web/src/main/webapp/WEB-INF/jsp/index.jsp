@@ -138,20 +138,38 @@
 	<div class="b_left">
 	<h2>优选必买<span></span></h2>
 				<ul class="bbig" id="bigPerfect">
-					<li class="price_list0" goods="215383" eid="b_215383_0"
-						id="cx_b_215383_0"><a
-						href="#"
-						title="红肉火龙果1000g（2个装）" target="_blank"><img class="lazy"
-							src="/images/html/95256f5b2857ec28914f631532508d76.jpg"
-							style="display: inline;"></a>
-					<div class="gBtn p-btn bbtn" style="top: 260px;">
-							<a pid="215383"
-								data_url="http://p02.e3mall.cn/2016/1800215383/middle_1800215383_1_1/160x160.jpg"
-								href="javascript:void(0)" indexflag="1">加入购物车</a>
+					<c:forEach items="${floor1List}" var="item" varStatus="status">
+					<c:if test="${status.index < 4}">
+					<li class="price_list0" goods="${item.goodsId }" eid="b_215383_0"	id="cx_b_215383_0">
+						<div class="btitle">
+							<a href="${item.url }" title="${item.titleDesc }" target="_blank">
+								${item.title }
+							</a>
 						</div>
 						<div class="bprice" id="priceK_b_215383_0">
-							<span><sup>￥</sup></span>19.9
-						</div></li>
+								<span><sup>￥</sup></span>${item.subTitle }
+						</div>
+						<a href="${item.url }" title="${item.titleDesc }" target="_blank">
+							<img class="lazy" src="${item.pic }" style="display: inline;">
+						</a>
+						<div class="gBtn p-btn bbtn" style="top: 299px;">
+							<a pid="215383"	href="javascript:void(0)" >加入购物车</a>
+						</div>
+					</li>
+					</c:if>
+					</c:forEach>
+					<!--
+					<li class="price_list0" goods="215383" eid="b_215383_0"	id="cx_b_215383_0">
+						<a href="#" title="红肉火龙果1000g（2个装）" target="_blank">
+							<img class="lazy" src="/images/html/95256f5b2857ec28914f631532508d76.jpg" style="display: inline;">
+						</a>
+						<div class="gBtn p-btn bbtn" style="top: 260px;">
+							<a pid="215383"	href="javascript:void(0)" >加入购物车</a>
+						</div>
+						<div class="bprice" id="priceK_b_215383_0">
+								<span><sup>￥</sup></span>19.9
+						</div>
+					</li>
 					<li class="price_list0" goods="57111" eid="b_57111_0"
 						id="cx_b_57111_0"><a
 						href="#"
@@ -192,10 +210,30 @@
 						</div>
 						<div class="bprice" id="priceK_b_12045_0">
 							<span><sup>￥</sup></span>39.8
-						</div></li>
+						</div></li> -->
 				</ul>
 				<ul class="bsmall" id="smallPerfect">
-					<li class="price_list0" goods="37194" eid="b_37194_1"
+					<c:forEach items="${floor1List}" var="item" varStatus="status">
+					<c:if test="${status.index >= 4 && status.index < 8}">
+					<li class="price_list0" goods="${item.goodsId }" eid="b_215383_0"	id="cx_b_215383_0">
+						<div class="btitle">
+							<a href="${item.url }" title="${item.titleDesc }" target="_blank">
+								${item.title }
+							</a>
+						</div>
+						<div class="bprice" id="priceK_b_215383_0">
+								<span><sup>￥</sup></span>${item.subTitle }
+						</div>
+						<a href="${item.url }" title="${item.titleDesc }" target="_blank">
+							<img class="lazy" src="${item.pic }" style="display: inline;">
+						</a>
+						<div class="gBtn p-btn bbtn" style="top: 299px;">
+							<a pid="215383"	href="javascript:void(0)" >加入购物车</a>
+						</div>
+					</li>
+					</c:if>
+					</c:forEach>
+					<!-- <li class="price_list0" goods="37194" eid="b_37194_1"
 						id="cx_b_37194_1"><a
 						href="http://www.e3mall.cn/html/products/38/1800037194.html#trackref=sfbest_hp_hp_goods_small-item1"
 						title="精气神 山黑猪猪蹄 320g" target="_blank"><img class="lazy"
@@ -255,7 +293,7 @@
 						</div>
 						<div class="bprice" id="priceK_b_167461_1">
 							<span><sup>￥</sup></span>22.2
-						</div></li>
+						</div></li> -->
 				</ul>
 			</div>   
 	<!-- 口碑甄选 end --> 
