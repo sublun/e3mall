@@ -37,7 +37,7 @@ public class StringUtil {
 		}
 		//如果是全角半角字符混杂情况下最后一个字符为汉字则超过限制长度，应该从后面去掉两个字符
 		if (strLen > length * 2) {
-			sb.delete(sb.length() - 3, sb.length() - 1);
+			sb.delete(sb.length() - 2, sb.length());
 		} else {
 			//如果获取字符串长度和限制长度相同则判断最后一个字符是全角还是半角
 			char endChar = sb.charAt(sb.length() - 1);
@@ -46,7 +46,7 @@ public class StringUtil {
 				sb.deleteCharAt(sb.length() - 1);
 			} else {
 			//如果是半角则需删除两个字符
-				sb.delete(sb.length() - 3, sb.length() - 1);
+				sb.delete(sb.length() - 2, sb.length());
 			}
 		}
 		//将字符串最后添加“…”
@@ -77,4 +77,20 @@ public class StringUtil {
         }
         return valueLength;
     }
+    
+    public static void main(String[] args) {
+		//System.out.println(cutString("【套装】小米5s 全网通 高配版 4GB内存 128GB ROM 银色 移动联通电信4G手机", 15));
+    	StringBuffer sBuffer = new StringBuffer("【套装】小米5s 全网通 高配版 4");
+    	/*sBuffer.append("1");
+    	sBuffer.append("2");
+    	sBuffer.append("3");
+    	sBuffer.append("4");
+    	sBuffer.append("5");
+    	sBuffer.append("6");*/
+    	System.out.println(sBuffer.length());
+    	//sBuffer.deleteCharAt(sBuffer.length() - 1);
+    	System.out.println(sBuffer);
+    	sBuffer.delete(sBuffer.length()-2, -1);
+    	System.out.println(sBuffer);
+	}
 }
