@@ -3,34 +3,105 @@
 <mapper namespace="cn.e3mall.search.mapper.SearchItemMapper" >
 	<select id="getSearchItemList" resultType="cn.e3mall.common.pojo.SearchItem">
 		SELECT
-			a.id,
-			a.title,
-			a.sell_point,
-			a.price,
-			a.image,
-			b. NAME category_name,
-			c.item_desc
+			g2.item_name,
+			p.ad_word,
+			g2.sell_price,
+			gi.img_url,
+			br.brand_name,
+			gc.`name` category_name,
+			ifnull(gs.sell_num, 0) sell_num
 		FROM
-			tb_item a
-		LEFT JOIN tb_item_cat b ON a.cid = b.id
-		LEFT JOIN tb_item_desc c ON a.id = c.item_id
-		WHERE
-			a.`status` = 1
+			tb_product p
+		JOIN (
+			SELECT
+				min(ITEM_ID) ITEM_ID,
+				PROD_ID
+			FROM
+				tb_item
+			GROUP BY
+				PROD_ID
+		) g ON p.PROD_ID = g.PROD_ID
+		JOIN tb_item g2 ON g.ITEM_ID = g2.ITEM_ID
+		JOIN (
+			SELECT
+				a.ITEM_ID,
+				b.IMG_URL
+			FROM
+				(
+					SELECT
+						min(img_id) img_id,
+						ITEM_ID
+					FROM
+						tb_item_image
+					GROUP BY
+						ITEM_ID
+				) a
+			JOIN tb_item_image b ON a.img_id = b.IMG_ID
+		) gi ON g.ITEM_ID = gi.ITEM_ID
+		JOIN tb_goods_cat gc ON p.CATEGORY_ID = gc.CATEGORY_ID
+		JOIN tb_brand br ON p.BRAND_ID = br.BRAND_ID
+		LEFT JOIN (
+			SELECT
+				sum(oi.num) sell_num,
+				pr.PROD_ID
+			FROM
+				tb_item go
+			JOIN tb_order_item oi ON go.ITEM_ID = oi.goods_id
+			JOIN tb_product pr ON go.PROD_ID = pr.PROD_ID
+			GROUP BY
+				pr.PROD_ID
+		) gs ON g.PROD_ID = gs.PROD_ID
 	</select>
 	<select id="getItemById" parameterType="long" resultType="cn.e3mall.common.pojo.SearchItem">
 		SELECT
-			a.id,
-			a.title,
-			a.sell_point,
-			a.price,
-			a.image,
-			b. NAME category_name,
-			c.item_desc
+			g2.item_name,
+			p.ad_word,
+			g2.sell_price,
+			gi.img_url,
+			br.brand_name,
+			gc.`name` category_name,
+			ifnull(gs.sell_num, 0) sell_num
 		FROM
-			tb_item a
-		LEFT JOIN tb_item_cat b ON a.cid = b.id
-		LEFT JOIN tb_item_desc c ON a.id = c.item_id
-		WHERE a.`status` = 1
-		  AND a.id=#{itemId}
+			tb_product p
+		JOIN (
+			SELECT
+				min(ITEM_ID) ITEM_ID,
+				PROD_ID
+			FROM
+				tb_item
+			GROUP BY
+				PROD_ID
+		) g ON p.PROD_ID = g.PROD_ID
+		JOIN tb_item g2 ON g.ITEM_ID = g2.ITEM_ID
+		JOIN (
+			SELECT
+				a.ITEM_ID,
+				b.IMG_URL
+			FROM
+				(
+					SELECT
+						min(img_id) img_id,
+						ITEM_ID
+					FROM
+						tb_item_image
+					GROUP BY
+						ITEM_ID
+				) a
+			JOIN tb_item_image b ON a.img_id = b.IMG_ID
+		) gi ON g.ITEM_ID = gi.ITEM_ID
+		JOIN tb_goods_cat gc ON p.CATEGORY_ID = gc.CATEGORY_ID
+		JOIN tb_brand br ON p.BRAND_ID = br.BRAND_ID
+		LEFT JOIN (
+			SELECT
+				sum(oi.num) sell_num,
+				pr.PROD_ID
+			FROM
+				tb_item go
+			JOIN tb_order_item oi ON go.ITEM_ID = oi.goods_id
+			JOIN tb_product pr ON go.PROD_ID = pr.PROD_ID
+			GROUP BY
+				pr.PROD_ID
+		) gs ON g.PROD_ID = gs.PROD_ID
+		  AND p.PROD_ID=#{PROD_ID}
 	</select>
 </mapper>

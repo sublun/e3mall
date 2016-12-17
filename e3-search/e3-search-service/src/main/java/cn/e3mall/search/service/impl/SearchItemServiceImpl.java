@@ -38,18 +38,13 @@ public class SearchItemServiceImpl implements SearchItemService {
 			SolrInputDocument document = new SolrInputDocument();
 			//向文档中添加域
 			document.addField("id", searchItem.getId());
-			document.addField("item_title", searchItem.getTitle());
-			document.addField("item_sell_point", searchItem.getSell_point());
-			document.addField("item_price", searchItem.getPrice());
-			//向索引库中只添加一张图片
-			String image = searchItem.getImage();
-			if (StringUtils.isNotBlank(image)) {
-				String[] images = image.split(",");
-				image = images[0];
-			}
-			document.addField("item_image", image);
-			document.addField("item_category_name", searchItem.getCategory_name());
-			document.addField("item_desc", searchItem.getItem_des());
+			document.addField("goods_name", searchItem.getGoods_name());
+			document.addField("goods_ad_word", searchItem.getAd_word());
+			document.addField("goods_sell_price", searchItem.getSell_price());
+			document.addField("goods_img_url", searchItem.getImg_url());
+			document.addField("goods_brand_name", searchItem.getBrand_name());
+			document.addField("goods_category_name", searchItem.getCategory_name());
+			document.addField("goods_sell_num", searchItem.getSell_num());
 			//写入索引库
 			solrServer.add(document);
 		}

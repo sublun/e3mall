@@ -1,13 +1,19 @@
 package cn.e3mall.solrj;
 
+import java.util.List;
+
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.response.FacetField;
+import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.response.RangeFacet;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.junit.Test;
+import org.springframework.stereotype.Controller;
 
 public class TestSolrJ {
 
@@ -73,6 +79,43 @@ public class TestSolrJ {
 			System.out.println(solrDocument.get("item_title"));
 			System.out.println(solrDocument.get("item_sell_point"));
 			System.out.println(solrDocument.get("item_price"));
+		}
+	}
+	@Test
+	public void testFacetQuery() throws Exception {
+//		facet.interval=price&facet.interval.set=[0,10]&&facet.interval.set=(10,100]&&facet.interval.set=(100,*]
+//		facet.range=price&facet.range.start=0&facet.range.end=600&facet.range.gap=200&facet.interval=price&facet.interval.set=[0,10]&facet.interval.set=(10,100]&facet.interval.set=(100,300]
+		SolrServer solrServer = new HttpSolrServer("http://192.168.25.181:8983/solr/collection1");
+		SolrQuery query = new SolrQuery();
+		query.setQuery("*:*");
+		query.setFacet(true);
+		query.addFacetField("manu_id_s");
+		query.addNumericRangeFacet("price", 0, 600, 200);
+		query.set("facet.range.other", "after");
+		QueryResponse queryResponse = solrServer.query(query);
+		//类别过滤
+		List<FacetField> fields = queryResponse.getFacetFields();
+		for (FacetField facetField : fields) {
+			System.out.println(facetField.getName() + ":");
+			List<Count> values = facetField.getValues();
+			for (Count count : values) {
+				System.out.println(count.getName() + ":" + count.getCount());
+			}
+		}
+		System.out.println("==================================");
+		//价格区间
+		List<RangeFacet> facetRanges = queryResponse.getFacetRanges();
+		for (RangeFacet rangeFacet : facetRanges) {
+			System.out.println(rangeFacet.getName() + ":");
+			List counts = rangeFacet.getCounts();
+			float max = 0;
+			for (Object object : counts) {
+				org.apache.solr.client.solrj.response.RangeFacet.Count count 
+				= (org.apache.solr.client.solrj.response.RangeFacet.Count) object;
+				max = (Float.parseFloat(count.getValue()) + 200);
+				System.out.println(count.getValue() + "-" + max + ":" + count.getCount());
+			}
+			System.out.println(max + "以上:" + rangeFacet.getAfter());
 		}
 	}
 }

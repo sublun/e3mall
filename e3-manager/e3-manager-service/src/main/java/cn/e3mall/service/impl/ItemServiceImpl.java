@@ -5,14 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.e3mall.common.pojo.E3Result;
-import cn.e3mall.common.pojo.EasyUIDataGridResult;
-import cn.e3mall.mapper.TbGoodsImageMapper;
-import cn.e3mall.mapper.TbGoodsMapper;
-import cn.e3mall.pojo.TbGoods;
-import cn.e3mall.pojo.TbGoodsImage;
-import cn.e3mall.pojo.TbGoodsImageExample;
-import cn.e3mall.pojo.TbGoodsImageExample.Criteria;
+import cn.e3mall.mapper.TbItemImageMapper;
+import cn.e3mall.mapper.TbItemMapper;
+import cn.e3mall.pojo.TbItem;
+import cn.e3mall.pojo.TbItemImage;
+import cn.e3mall.pojo.TbItemImageExample;
+import cn.e3mall.pojo.TbItemImageExample.Criteria;
 import cn.e3mall.service.ItemService;
 
 /**
@@ -33,9 +31,9 @@ import cn.e3mall.service.ItemService;
 public class ItemServiceImpl implements ItemService {
 	
 	@Autowired
-	private TbGoodsMapper goodsMapper;
+	private TbItemMapper itemMapper;
 	@Autowired
-	private TbGoodsImageMapper goodsImageMapper;
+	private TbItemImageMapper itemImageMapper;
 	
 	/**
 	 * 根据商品id取商品信息
@@ -46,10 +44,10 @@ public class ItemServiceImpl implements ItemService {
 	 * @see cn.e3mall.service.ItemService#getItemById(long)
 	 */
 	@Override
-	public TbGoods getItemById(long goodsId) {
+	public TbItem getItemById(long itemId) {
 		//根据商品id取商品信息
-		TbGoods goods = goodsMapper.selectByPrimaryKey(goodsId);
-		return goods;
+		TbItem item = itemMapper.selectByPrimaryKey(itemId);
+		return item;
 	}
 
 	/**
@@ -61,16 +59,16 @@ public class ItemServiceImpl implements ItemService {
 	 * @see cn.e3mall.service.ItemService#getGoodsImages(long)
 	 */
 	@Override
-	public List<TbGoodsImage> getGoodsImages(long goodsId) {
+	public List<TbItemImage> getGoodsImages(long itemId) {
 		//根据商品id取商品图片
-		TbGoodsImageExample example = new TbGoodsImageExample();
+		TbItemImageExample example = new TbItemImageExample();
 		//设置查询条件
 		Criteria criteria = example.createCriteria();
-		criteria.andGoodsIdEqualTo(goodsId);
+		criteria.andItemIdEqualTo(itemId);
 		//设置排序条件
 		example.setOrderByClause("SORT");
 		//执行查询
-		List<TbGoodsImage> imageList = goodsImageMapper.selectByExample(example);
+		List<TbItemImage> imageList = itemImageMapper.selectByExample(example);
 		return imageList;
 	}
 

@@ -48,12 +48,12 @@
 		<table schema="" tableName="tb_category_brand"></table>
 		<table schema="" tableName="tb_content"></table>
 		<table schema="" tableName="tb_content_category"></table>
-		<table schema="" tableName="tb_goods"></table>
-		<table schema="" tableName="tb_goods_image"></table>
-		<table schema="" tableName="tb_goods_storage"></table>
 		<table schema="" tableName="tb_goods_cat"></table>
-		<table schema="" tableName="tb_goods_param"></table>
-		<table schema="" tableName="tb_goods_param_item"></table>
+		<table schema="" tableName="tb_item"></table>
+		<table schema="" tableName="tb_item_image"></table>
+		<table schema="" tableName="tb_item_storage"></table>
+		<table schema="" tableName="tb_param_template"></table>
+		<table schema="" tableName="tb_product_param"></table>
 		<table schema="" tableName="tb_order"></table>
 		<table schema="" tableName="tb_order_item"></table>
 		<table schema="" tableName="tb_order_shipping"></table>

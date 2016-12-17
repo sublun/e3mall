@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import cn.e3mall.common.utils.StringUtil;
 import cn.e3mall.content.service.ContentService;
 import cn.e3mall.pojo.TbContent;
-import cn.e3mall.pojo.TbGoods;
-import cn.e3mall.pojo.TbGoodsImage;
+import cn.e3mall.pojo.TbItem;
+import cn.e3mall.pojo.TbItemImage;
 import cn.e3mall.service.ItemService;
 
 /**
@@ -67,10 +67,10 @@ public class IndexController {
 			//如果内容没有对应的url，则判断是否有商品信息，将商品id转换成url
 			if (StringUtils.isEmpty(tbContent.getUrl()) && tbContent.getGoodsId() != null) {
 				//根据商品信息取商品id
-				TbGoods goods = itemService.getItemById(tbContent.getGoodsId());
+				TbItem item = itemService.getItemById(tbContent.getGoodsId());
 				//如果内容信息中没有图片则取商品图片
 				if (StringUtils.isEmpty(tbContent.getPic())) {
-					List<TbGoodsImage> images = itemService.getGoodsImages(tbContent.getGoodsId());
+					List<TbItemImage> images = itemService.getGoodsImages(tbContent.getGoodsId());
 					if (images != null && images.size() > 0) {
 						//取一张商品图片
 						tbContent.setPic(images.get(0).getImgUrl());
@@ -79,19 +79,19 @@ public class IndexController {
 				//如果没有内容标题则使用商品名称
 				if (StringUtils.isEmpty(tbContent.getTitle())) {
 					//取商品标题
-					String goodsName = goods.getGoodsName();
+					String goodsName = item.getItemName();
 					//限制商品标题过长，最多显示15个汉字
 					goodsName = StringUtil.cutString(goodsName, 15);
 					tbContent.setTitle(goodsName);
 					//将完整标题保存
-					tbContent.setTitleDesc(goods.getGoodsName());
+					tbContent.setTitleDesc(item.getItemName());
 				}
 				//如果没有商品价格则使用商品价格
 				if (StringUtils.isEmpty(tbContent.getSubTitle())) {
-					tbContent.setSubTitle(goods.getSellPrice().toString());
+					tbContent.setSubTitle(item.getSellPrice().toString());
 				}
 				//url跳转到商品详情页面
-				tbContent.setUrl(GOOD_DETAIL_URL + goods.getGoodsId() + ".html");
+				tbContent.setUrl(GOOD_DETAIL_URL + item.getItemId() + ".html");
 			}
 		}
 		return contentList;

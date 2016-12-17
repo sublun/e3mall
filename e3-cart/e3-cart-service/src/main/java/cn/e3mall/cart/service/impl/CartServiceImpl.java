@@ -12,7 +12,9 @@ import cn.e3mall.cart.service.CartService;
 import cn.e3mall.common.pojo.E3Result;
 import cn.e3mall.common.utils.JsonUtils;
 import cn.e3mall.jedis.JedisClient;
+import cn.e3mall.mapper.TbGoodsMapper;
 import cn.e3mall.mapper.TbItemMapper;
+import cn.e3mall.pojo.TbGoods;
 import cn.e3mall.pojo.TbItem;
 
 /**
@@ -28,7 +30,7 @@ public class CartServiceImpl implements CartService {
 	@Autowired
 	private JedisClient jedisClient;
 	@Autowired
-	private TbItemMapper itemMapper;
+	private TbGoodsMapper goodsMapper;
 	
 	@Value("${REDIS_CART_KEY}")
 	private String REDIS_CART_KEY;
@@ -52,7 +54,7 @@ public class CartServiceImpl implements CartService {
 		//如果存在购物车数量相加
 		if (isExists) {
 			String json = jedisClient.hget(REDIS_CART_KEY + ":" + userId, itemId + "");
-			TbItem item = JsonUtils.jsonToPojo(json, TbItem.class);
+			TbGoods item = JsonUtils.jsonToPojo(json, TbGoods.class);
 			//数量相加
 			item.setNum(item.getNum() + num);
 			//更新redis
@@ -61,7 +63,7 @@ public class CartServiceImpl implements CartService {
 		}
 		//如果不存在添加新商品
 		//根据商品id取商品信息
-		TbItem item = itemMapper.selectByPrimaryKey(itemId);
+		TbItem item = goodsMapper.selectByPrimaryKey(itemId);
 		//更新商品数量
 		item.setNum(num);
 		//将商品添加到redis
