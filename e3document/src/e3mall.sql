@@ -1,6 +1,6 @@
 /*==============================================================*/
 /* DBMS name:      MySQL 5.0                                    */
-/* Created on:     2016/10/21 21:49:03                          */
+/* Created on:     2016/12/17 17:19:33                          */
 /*==============================================================*/
 
 
@@ -12,17 +12,13 @@ drop table if exists tb_content;
 
 drop table if exists tb_content_category;
 
-drop table if exists tb_goods;
-
 drop table if exists tb_goods_cat;
 
-drop table if exists tb_goods_image;
+drop table if exists tb_item;
 
-drop table if exists tb_goods_param;
+drop table if exists tb_item_image;
 
-drop table if exists tb_goods_param_item;
-
-drop table if exists tb_goods_storage;
+drop table if exists tb_item_storage;
 
 drop table if exists tb_order;
 
@@ -30,7 +26,11 @@ drop table if exists tb_order_item;
 
 drop table if exists tb_order_shipping;
 
+drop table if exists tb_param_template;
+
 drop table if exists tb_product;
+
+drop table if exists tb_product_param;
 
 drop table if exists tb_property;
 
@@ -45,17 +45,17 @@ drop table if exists tb_user;
 /*==============================================================*/
 create table tb_brand
 (
-   BRAND_ID             bigint not null auto_increment,
-   BRAND_NAME           varchar(128),
-   EN_NAME              varchar(128),
-   PINYIN               varchar(128),
-   INITIAL              char(1),
-   LOGO_URL             varchar(1024),
-   IS_DELETE            char(1),
-   ADD_USER             bigint,
-   ADD_TIME             timestamp,
-   MOD_USER             bigint,
-   MOD_TIME             timestamp,
+   BRAND_ID             bigint not null auto_increment comment '品牌ID',
+   BRAND_NAME           varchar(128) comment '品牌名称',
+   EN_NAME              varchar(128) comment '英文名',
+   PINYIN               varchar(128) comment '拼音',
+   INITIAL              char(1) comment '首字母',
+   LOGO_URL             varchar(1024) comment 'logo路径',
+   IS_DELETE            char(1) comment '是否删除',
+   ADD_USER             bigint comment '添加人',
+   ADD_TIME             timestamp comment '添加时间',
+   MOD_USER             bigint comment '修改人',
+   MOD_TIME             timestamp comment '修改时间',
    primary key (BRAND_ID)
 );
 
@@ -66,9 +66,9 @@ alter table tb_brand comment '品牌表';
 /*==============================================================*/
 create table tb_category_brand
 (
-   BRAND_ID             bigint not null,
-   item_cat_id          bigint(20) not null comment '类目ID',
-   primary key (BRAND_ID, item_cat_id)
+   BRAND_ID             bigint not null comment '品牌iD',
+   CATEGORY_ID          bigint not null comment '类目ID',
+   primary key (BRAND_ID, CATEGORY_ID)
 );
 
 alter table tb_category_brand comment '分类品牌关系表';
@@ -115,110 +115,76 @@ create table tb_content_category
 alter table tb_content_category comment '广告位表';
 
 /*==============================================================*/
-/* Table: tb_goods                                              */
-/*==============================================================*/
-create table tb_goods
-(
-   GOODS_ID             bigint not null comment '商品编号',
-   PROD_ID              bigint comment '商品编号',
-   GOODS_NAME           varchar(512) not null comment '商品名称',
-   COST_PRICE           numeric(15,2) comment '商品分类编号',
-   SELL_PRICE           numeric(15,2) not null comment '商品品牌',
-   STATUS               char(1) comment '1、下架
-            2、上架
-            3、冻结',
-   COLOR                varchar(256),
-   VERSION              varchar(1024),
-   STOCK_WARNING        numeric(22,0) comment '库存预警',
-   IS_DELETE            char(1) comment 'Y：是
-            N：否',
-   ADD_USER_ID          bigint,
-   ADD_TIME             timestamp,
-   MOD_USER_ID          bigint,
-   MOD_TIME             timestamp,
-   primary key (GOODS_ID)
-);
-
-alter table tb_goods comment '商品表，也是SKU表';
-
-/*==============================================================*/
 /* Table: tb_goods_cat                                          */
 /*==============================================================*/
 create table tb_goods_cat
 (
-   item_cat_id          bigint(20) not null auto_increment comment '类目ID',
-   parent_id            bigint(20) default NULL comment '父类目ID=0时，代表的是一级的类目',
-   name                 varchar(50) default NULL comment '类目名称',
-   status               int(1) default 1 comment '状态。可选值:1(正常),2(删除)',
-   sort_order           int(4) default NULL comment '排列序号，表示同级类目的展现次序，如数值相等则按名称次序排列。取值范围:大于零的整数',
-   is_parent            tinyint(1) default 1 comment '该类目是否为父类目，1为true，0为false',
-   created              datetime default NULL comment '创建时间',
-   updated              datetime default NULL comment '创建时间',
-   primary key (item_cat_id),
-   key parent_id (parent_id, status),
-   key sort_order (sort_order)
+   CATEGORY_ID          bigint not null auto_increment comment '类目ID',
+   PARENT_ID            bigint default NULL comment '父类目ID=0时，代表的是一级的类目',
+   NAME                 varchar(50) default NULL comment '类目名称',
+   STATUS               int(1) default 1 comment '状态。可选值:1(正常),2(删除)',
+   SORT_ORDER           int(4) default NULL comment '排列序号，表示同级类目的展现次序，如数值相等则按名称次序排列。取值范围:大于零的整数',
+   IS_PARENT            tinyint(1) default 1 comment '该类目是否为父类目，1为true，0为false',
+   CREATED              datetime default NULL comment '创建时间',
+   UPDATED              datetime default NULL comment '创建时间',
+   primary key (CATEGORY_ID),
+   key parent_id (PARENT_ID, STATUS),
+   key sort_order (SORT_ORDER)
 );
 
 alter table tb_goods_cat comment '商品分类表';
 
 /*==============================================================*/
-/* Table: tb_goods_image                                        */
+/* Table: tb_item                                               */
 /*==============================================================*/
-create table tb_goods_image
+create table tb_item
 (
-   IMG_ID               bigint not null auto_increment,
-   GOODS_ID             bigint comment '商品编号',
-   IMG_URL              varchar(1024),
-   IMG_EXT              varchar(128),
-   SORT                 int,
-   IS_DELETE            char(1),
+   ITEM_ID              bigint not null comment '商品ID',
+   PROD_ID              bigint comment '产品ID',
+   ITEM_NAME            varchar(512) not null comment '商品名称',
+   COST_PRICE           numeric(15,2) comment '供价',
+   SELL_PRICE           numeric(15,2) not null comment '售价',
+   STATUS               char(1) comment '状态1、下架 2、上架 3、冻结',
+   COLOR                varchar(256) comment '颜色',
+   VERSION              varchar(1024) comment '版本',
+   STOCK_WARNING        numeric(22,0) comment '库存预警',
+   IS_DELETE            char(1) comment '是否删除Y：是 N：否',
+   ADD_USER_ID          bigint comment '添加人',
+   ADD_TIME             timestamp comment '添加时间',
+   MOD_USER_ID          bigint comment '修改人',
+   MOD_TIME             timestamp comment '修改时间',
+   primary key (ITEM_ID)
+);
+
+alter table tb_item comment '商品表，也是SKU表';
+
+/*==============================================================*/
+/* Table: tb_item_image                                         */
+/*==============================================================*/
+create table tb_item_image
+(
+   IMG_ID               bigint not null auto_increment comment '图片ID',
+   ITEM_ID              bigint comment '商品ID',
+   IMG_URL              varchar(1024) comment '图片路径',
+   IMG_EXT              varchar(128) comment '图片扩展名',
+   SORT                 int comment '排序',
+   IS_DELETE            char(1) comment '是否删除',
    primary key (IMG_ID)
 );
 
-alter table tb_goods_image comment '商品图片表';
+alter table tb_item_image comment '商品图片表';
 
 /*==============================================================*/
-/* Table: tb_goods_param                                        */
+/* Table: tb_item_storage                                       */
 /*==============================================================*/
-create table tb_goods_param
+create table tb_item_storage
 (
-   id                   bigint(20) not null auto_increment,
-   item_cat_id          bigint(20) default NULL comment '商品类目ID',
-   param_data           text comment '参数数据，格式为json格式',
-   created              datetime default NULL,
-   updated              datetime default NULL,
-   primary key (id),
-   key item_cat_id (item_cat_id)
+   ITEM_ID              bigint not null comment '商品编号',
+   STORAGE_NUM          int not null comment '商品库存',
+   primary key (ITEM_ID)
 );
 
-alter table tb_goods_param comment '属性模板表';
-
-/*==============================================================*/
-/* Table: tb_goods_param_item                                   */
-/*==============================================================*/
-create table tb_goods_param_item
-(
-   id                   bigint(20) not null auto_increment,
-   prod_id              bigint not null comment '商品编号',
-   param_data           text comment '参数数据，格式为json格式',
-   created              datetime default NULL,
-   updated              datetime default NULL,
-   primary key (id)
-);
-
-alter table tb_goods_param_item comment '商品属性表';
-
-/*==============================================================*/
-/* Table: tb_goods_storage                                      */
-/*==============================================================*/
-create table tb_goods_storage
-(
-   GOODS_ID             bigint not null comment '商品编号',
-   STORAGE_NUM          int not null,
-   primary key (GOODS_ID)
-);
-
-alter table tb_goods_storage comment '商品库存表';
+alter table tb_item_storage comment '商品库存表';
 
 /*==============================================================*/
 /* Table: tb_order                                              */
@@ -258,12 +224,12 @@ alter table tb_order comment '订单表';
 create table tb_order_item
 (
    id                   varchar(20) not null,
-   item_id              varchar(50),
-   order_id             varchar(50),
-   num                  int(10) default NULL comment '商品购买数量',
+   order_id             varchar(50) not null,
+   goods_id             bigint not null,
+   num                  int(10) not null comment '商品购买数量',
    title                varchar(200),
-   price                bigint(50) default NULL comment '商品单价',
-   total_fee            bigint(50) default NULL comment '商品总金额',
+   price                bigint(50) not null comment '商品单价',
+   total_fee            bigint(50) not null comment '商品总金额',
    pic_path             varchar(200),
    primary key (id)
 )
@@ -294,18 +260,34 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8;
 alter table tb_order_shipping comment '订单物流表';
 
 /*==============================================================*/
+/* Table: tb_param_template                                     */
+/*==============================================================*/
+create table tb_param_template
+(
+   ID                   bigint not null auto_increment,
+   CATEGORY_ID          bigint default NULL comment '商品类目ID',
+   PARAM_DATA           text comment '参数数据，格式为json格式',
+   CREATED              datetime default NULL,
+   UPDATED              datetime default NULL,
+   primary key (ID),
+   key item_cat_id (CATEGORY_ID)
+);
+
+alter table tb_param_template comment '属性模板表';
+
+/*==============================================================*/
 /* Table: tb_product                                            */
 /*==============================================================*/
 create table tb_product
 (
    PROD_ID              bigint not null comment '商品编号',
-   item_cat_id          bigint(20) comment '类目ID',
-   BRAND_ID             bigint,
+   CATEGORY_ID          bigint comment '类目ID',
+   BRAND_ID             bigint comment '品牌ID',
    PROD_NAME            varchar(256) comment '商品名称',
    AD_WORD              varchar(1000) comment '商品广告词',
-   PROD_DESC            longtext,
-   PACKAGING_LIST       varchar(256),
-   AFTER_SALE_SERVICE   varchar(1024),
+   PROD_DESC            longtext comment '商品介绍',
+   PACKAGING_LIST       varchar(256) comment '包装清单',
+   AFTER_SALE_SERVICE   varchar(1024) comment '售后服务',
    STOCK_WARNING        numeric(22,0) comment '库存预警',
    WEIGHT               numeric(15,2) comment '重量kg',
    VOLUME               numeric(15,2) comment '体积m3',
@@ -315,36 +297,48 @@ create table tb_product
             4、有颜色有版本',
    IS_DELETE            char(1) comment 'Y：是
             N：否',
-   ADD_USER_ID          bigint,
-   ADD_TIME             timestamp,
-   MOD_USER_ID          bigint,
-   MOD_TIME             timestamp,
+   ADD_USER_ID          bigint comment '添加人',
+   ADD_TIME             timestamp comment '添加时间',
+   MOD_USER_ID          bigint comment '修改人',
+   MOD_TIME             timestamp comment '修改时间',
    primary key (PROD_ID)
 );
 
-alter table tb_product comment '产品表(sku表)';
+alter table tb_product comment '产品表';
+
+/*==============================================================*/
+/* Table: tb_product_param                                      */
+/*==============================================================*/
+create table tb_product_param
+(
+   ID                   bigint not null auto_increment,
+   PRODUCT_ID           bigint not null comment '产品ID',
+   PRODUCT_PARAM_DATA   text comment '参数数据，格式为json格式',
+   CREATED              datetime default NULL,
+   UPDATED              datetime default NULL,
+   primary key (ID)
+);
+
+alter table tb_product_param comment '产品属性表';
 
 /*==============================================================*/
 /* Table: tb_property                                           */
 /*==============================================================*/
 create table tb_property
 (
-   PROP_ID              bigint not null auto_increment,
-   PROP_NAME            varchar(256),
-   INPUT_TYPE           char(1) comment '1、文本框
-            2、下拉框',
-   SORT                 int,
-   IS_NULLABLE          char(1) comment 'Y：可以为空
-            N：不能为空
+   PROP_ID              bigint not null auto_increment comment '属性ID',
+   PROP_NAME            varchar(256) comment '属性名称',
+   INPUT_TYPE           char(1) comment '输入方式1、文本框2、下拉框',
+   SORT                 int comment '排序',
+   IS_NULLABLE          char(1) comment '允许为空Y：可以为空 N：不能为空
             ',
-   PROP_GROUP           varchar(256),
-   PROP_GROUP_SORT      int,
-   IS_DELETE            char(1) comment 'Y：是
-            N：否',
-   ADD_USER             bigint,
-   ADD_TIME             timestamp,
-   MOD_USER             bigint,
-   MOD_TIME             timestamp,
+   PROP_GROUP           varchar(256) comment '属性组',
+   PROP_GROUP_SORT      int comment '属性组排序',
+   IS_DELETE            char(1) comment '是否删除Y：是N：否',
+   ADD_USER             bigint comment '添加人',
+   ADD_TIME             timestamp comment '添加时间',
+   MOD_USER             bigint comment '修改人',
+   MOD_TIME             timestamp comment '修改时间',
    primary key (PROP_ID)
 );
 
@@ -355,9 +349,9 @@ alter table tb_property comment '商品属性表';
 /*==============================================================*/
 create table tb_property_enum
 (
-   PROP_ENUM_ID         bigint not null auto_increment,
-   PROP_ID              bigint,
-   PROP_ENUM_VALUE      varchar(512),
+   PROP_ENUM_ID         bigint not null auto_increment comment '属性枚举值ID',
+   PROP_ID              bigint comment '属性ID',
+   PROP_ENUM_VALUE      varchar(512) comment '属性枚举值VALUE',
    primary key (PROP_ENUM_ID)
 );
 
