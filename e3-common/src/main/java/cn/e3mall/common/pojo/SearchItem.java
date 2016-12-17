@@ -1,47 +1,55 @@
 package cn.e3mall.common.pojo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class SearchItem implements Serializable{
 
 	private String id;
-	private String title;
-	private String sell_point;
-	private long price;
-	private String image;
+	private String goods_name;
+	private String ad_word;
+	private double sell_price;
+	private String img_url;
+	private String brand_name;
 	private String category_name;
-	private String item_des;
+	private int sell_num;
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getTitle() {
-		return title;
+	public String getGoods_name() {
+		return goods_name;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setGoods_name(String goods_name) {
+		this.goods_name = goods_name;
 	}
-	public String getSell_point() {
-		return sell_point;
+	public String getAd_word() {
+		return ad_word;
 	}
-	public void setSell_point(String sell_point) {
-		this.sell_point = sell_point;
+	public void setAd_word(String ad_word) {
+		this.ad_word = ad_word;
 	}
-	public long getPrice() {
-		return price;
+	public double getSell_price() {
+		return sell_price;
 	}
-	public void setPrice(long price) {
-		this.price = price;
+	public void setSell_price(double sell_price) {
+		this.sell_price = sell_price;
 	}
-	public String getImage() {
-		return image;
+	public String getImg_url() {
+		return img_url;
 	}
-	public void setImage(String image) {
-		this.image = image;
+	public void setImg_url(String img_url) {
+		this.img_url = img_url;
+	}
+	public String getBrand_name() {
+		return brand_name;
+	}
+	public void setBrand_name(String brand_name) {
+		this.brand_name = brand_name;
 	}
 	public String getCategory_name() {
 		return category_name;
@@ -49,18 +57,13 @@ public class SearchItem implements Serializable{
 	public void setCategory_name(String category_name) {
 		this.category_name = category_name;
 	}
-	public String getItem_des() {
-		return item_des;
+	public int getSell_num() {
+		return sell_num;
 	}
-	public void setItem_des(String item_des) {
-		this.item_des = item_des;
+	public void setSell_num(int sell_num) {
+		this.sell_num = sell_num;
 	}
-	@JsonIgnore
-	public String[] getImages() {
-		if (image != null && !"".equals(image)) {
-			return image.split(",");
-		}
-		return null;
-	}
+	
+	
 	
 }
