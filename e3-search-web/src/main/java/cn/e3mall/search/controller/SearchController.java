@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import cn.e3mall.common.pojo.SearchInfo;
 import cn.e3mall.common.pojo.SearchResult;
 import cn.e3mall.search.service.SearchService;
 
@@ -27,11 +28,20 @@ public class SearchController {
 	private SearchService searchService;
 	
 	@RequestMapping("/search")
-	public String search(@RequestParam("keyword")String queryString, 
+	public String search(@RequestParam("keyword")String queryString, String category, String price, String sort,
 			@RequestParam(defaultValue="1")Integer page, Model model) throws Exception{
 		//解决get乱码问题
 		queryString = new String(queryString.getBytes("iso8859-1"), "utf-8");
-		SearchResult searchResult = searchService.query(queryString, page, ITEM_ROWS);
+		//设置查询条件
+		SearchInfo searchInfo = new SearchInfo();
+		searchInfo.setQueryString(queryString);
+		searchInfo.setCategory(category);
+		searchInfo.setPrice(price);
+		searchInfo.setSort(sort);
+		searchInfo.setPage(page);
+		searchInfo.setRows(ITEM_ROWS);
+		//执行查询
+		SearchResult searchResult = searchService.query(searchInfo);
 		//向页面传递参数
 		model.addAttribute("query", queryString);
 		model.addAttribute("totalPages", searchResult.getTotalPage());

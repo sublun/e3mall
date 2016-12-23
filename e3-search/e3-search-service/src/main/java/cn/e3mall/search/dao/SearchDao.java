@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrQuery.ORDER;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.RangeFacet;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Repository;
 
 import cn.e3mall.common.pojo.SearchItem;
 import cn.e3mall.common.pojo.SearchResult;
+import cn.e3mall.search.pojo.PriceRange;
 @Repository
 public class SearchDao {
 	
@@ -117,5 +119,58 @@ public class SearchDao {
 		}
 		//将价格范围添加到结果
 		result.setPriceRange(priceRange);
+	}
+	
+	/**
+	 * 根据查询条件查询价格区间
+	 * <p>Title: getPriceRange</p>
+	 * <p>Description: </p>
+	 * @param query
+	 * @return
+	 * @throws Exception
+	 */
+	public PriceRange getPriceRange(String queryString) throws Exception {
+		SolrQuery query = new SolrQuery(queryString);
+		//根据查询条件降序排列
+		query.setSort("goods_sell_price", ORDER.desc);
+		//取最高价格
+		query.setStart(0);
+		query.setRows(1);
+		//执行查询
+		QueryResponse response = solrServer.query(query);
+		SolrDocumentList solrDocumentList = response.getResults();
+		if (solrDocumentList.size() != 1) {
+			return new PriceRange();
+		}
+		//取最高价格商品
+		SolrDocument solrDocument = solrDocumentList.get(0);
+		double maxPrice = (double) solrDocument.get("goods_sell_price");
+		PriceRange priceRange = new PriceRange();
+		priceRange.setMin(0);
+		//设置区间最大值
+		if (maxPrice < 10) {
+			priceRange.setMax((int) maxPrice);
+		} else if (maxPrice < 100) {
+			priceRange.setMax((int)maxPrice / 10 * 10);
+		} else if (maxPrice < 1000) {
+			priceRange.setMax((int)maxPrice / 100 * 100);
+		} else {
+			priceRange.setMax((int)maxPrice / 1000 * 1000);
+		}
+		// 设置区间步长
+		// 区间数量7个，计算区间大小
+		int gap = (int) (maxPrice / 7);
+		if (gap < 10) {
+			priceRange.setGap(10);
+		} else if (gap < 100) {
+			priceRange.setGap(gap / 10 * 10);
+		} else if (gap < 1000) {
+			priceRange.setGap(gap / 100 * 100);
+		} else {
+			priceRange.setGap(gap / 1000 * 1000);
+		}
+		
+		return priceRange;
+		
 	}
 }

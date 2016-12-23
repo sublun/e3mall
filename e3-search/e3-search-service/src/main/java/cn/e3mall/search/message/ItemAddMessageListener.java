@@ -29,7 +29,7 @@ public class ItemAddMessageListener implements MessageListener {
 	
 	@Override
 	public void onMessage(Message message) {
-		try {
+		/*try {
 			//推荐暂停一下。等待数据库事务提交
 			Thread.sleep(100);
 			// 接收消息
@@ -62,7 +62,7 @@ public class ItemAddMessageListener implements MessageListener {
 			solrServer.commit();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 
 	}
