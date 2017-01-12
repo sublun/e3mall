@@ -1,5 +1,6 @@
 cn\e3mall\search\dao\SearchDao.class
 cn\e3mall\search\mapper\SearchItemMapper.class
+cn\e3mall\search\pojo\PriceRange.class
 cn\e3mall\search\message\MyMessageListener.class
 cn\e3mall\search\message\ItemAddMessageListener.class
 cn\e3mall\search\service\impl\SearchServiceImpl.class

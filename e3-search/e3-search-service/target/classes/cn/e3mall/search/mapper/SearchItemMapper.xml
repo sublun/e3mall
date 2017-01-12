@@ -3,6 +3,7 @@
 <mapper namespace="cn.e3mall.search.mapper.SearchItemMapper" >
 	<select id="getSearchItemList" resultType="cn.e3mall.common.pojo.SearchItem">
 		SELECT
+			g.ITEM_ID id,
 			g2.item_name,
 			p.ad_word,
 			g2.sell_price,
@@ -54,6 +55,7 @@
 	</select>
 	<select id="getItemById" parameterType="long" resultType="cn.e3mall.common.pojo.SearchItem">
 		SELECT
+			g.ITEM_ID id,
 			g2.item_name,
 			p.ad_word,
 			g2.sell_price,

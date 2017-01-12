@@ -82,7 +82,7 @@ public class TestSolrJ {
 		}
 	}
 	@Test
-	public void testFacetQuery() throws Exception {
+	public void testFacetQuery() throws Exception { 
 //		facet.interval=price&facet.interval.set=[0,10]&&facet.interval.set=(10,100]&&facet.interval.set=(100,*]
 //		facet.range=price&facet.range.start=0&facet.range.end=600&facet.range.gap=200&facet.interval=price&facet.interval.set=[0,10]&facet.interval.set=(10,100]&facet.interval.set=(100,300]
 		SolrServer solrServer = new HttpSolrServer("http://192.168.25.181:8983/solr/collection1");

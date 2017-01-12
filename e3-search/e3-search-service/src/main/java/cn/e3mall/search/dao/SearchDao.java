@@ -2,18 +2,21 @@ package cn.e3mall.search.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrQuery.ORDER;
+import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.response.FacetField;
+import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.RangeFacet;
-import org.apache.solr.client.solrj.response.FacetField.Count;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.util.NamedList;
+import org.apache.solr.common.util.SimpleOrderedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 /**
@@ -34,6 +37,7 @@ public class SearchDao {
 	private SolrServer solrServer;
 
 	public SearchResult search(SolrQuery query) throws Exception{
+		System.out.println(query);
 		//根据Query对象查询索引库
 		QueryResponse response = solrServer.query(query);
 		//取查询结果
@@ -65,7 +69,7 @@ public class SearchDao {
 				//如果没有开启高亮则直接取商品名称
 				goodsName = (String) solrDocument.get("goods_name");
 			}
-			searchItem.setGoods_name(goodsName);
+			searchItem.setItem_name(goodsName);
 			//添加到商品列表
 			items.add(searchItem);
 		}
@@ -98,23 +102,47 @@ public class SearchDao {
 		for (RangeFacet rangeFacet : facetRanges) {
 			System.out.println(rangeFacet.getName() + ":");
 			List counts = rangeFacet.getCounts();
-			float max = 0;
+			//区间下限
+			int max = 0;
+			//区间步长
+			/*NamedList namedList = queryResponse.getResponseHeader();
+			Iterator iterator = namedList.iterator();
+			while(iterator.hasNext()) {
+				Object next = iterator.next();
+				System.out.println(next);
+			}
+			NamedList object2 = (NamedList) namedList.get("params");
+			Iterator iterator2 = object2.iterator();
+			while(iterator2.hasNext()) {
+				Object next = iterator2.next();
+				System.out.println(next);
+			}
+			Object gap = object2.get("f.price.facet.range.gap");*/
+			NamedList params = (NamedList) queryResponse.getResponseHeader().get("params");
+			Object gap = params.get("f.price.facet.range.gap");
+			int step = Integer.parseInt(gap.toString());
+			//queryResponse.getResponseHeader().get("facet.range.gap");
 			//因为当前的区间只有价格，只取价格的区间列表。
 			for (Object object : counts) {
 				org.apache.solr.client.solrj.response.RangeFacet.Count count 
 				= (org.apache.solr.client.solrj.response.RangeFacet.Count) object;
-				max = (Float.parseFloat(count.getValue()) + 200);
+				//区间上限
+				int start = (int) Float.parseFloat(count.getValue());
+				//计算区间下限
+				max = start + step;
 				Map range = new HashMap<>();
-				range.put("begin", count.getValue());
-				range.put("end", count.getCount());
-				System.out.println(count.getValue() + "-" + max + ":" + count.getCount());
+				range.put("name", (int) Float.parseFloat(count.getValue()) + "-" + max);
+				range.put("value", (int) Float.parseFloat(count.getValue()) + "-" + max);
+				range.put("count", count.getCount());
+				System.out.println((int) Float.parseFloat(count.getValue()) + "-" + max + ":" + count.getCount());
 				priceRange.add(range);
 			}
 			System.out.println(max + "以上:" + rangeFacet.getAfter());
 			//取最后的区间
 			Map range = new HashMap<>();
-			range.put("begin", max);
-			range.put("end", "*");
+			range.put("name", max + "以上");
+			range.put("value", max + "-*");
+			range.put("count", rangeFacet.getAfter());
 			priceRange.add(range);
 		}
 		//将价格范围添加到结果
@@ -136,6 +164,7 @@ public class SearchDao {
 		//取最高价格
 		query.setStart(0);
 		query.setRows(1);
+		query.set("df", "goods_name");
 		//执行查询
 		QueryResponse response = solrServer.query(query);
 		SolrDocumentList solrDocumentList = response.getResults();
@@ -151,23 +180,29 @@ public class SearchDao {
 		if (maxPrice < 10) {
 			priceRange.setMax((int) maxPrice);
 		} else if (maxPrice < 100) {
-			priceRange.setMax((int)maxPrice / 10 * 10);
+			maxPrice = Math.round(maxPrice / 10) * 10;
+			priceRange.setMax((int)maxPrice);
 		} else if (maxPrice < 1000) {
-			priceRange.setMax((int)maxPrice / 100 * 100);
+			maxPrice = Math.round(maxPrice / 100) * 100;
+			priceRange.setMax((int)maxPrice);
 		} else {
-			priceRange.setMax((int)maxPrice / 1000 * 1000);
+			maxPrice = Math.round(maxPrice / 1000) * 1000;
+			priceRange.setMax((int)maxPrice);
 		}
 		// 设置区间步长
 		// 区间数量7个，计算区间大小
-		int gap = (int) (maxPrice / 7);
+		float gap = (int) (maxPrice / 7);
 		if (gap < 10) {
 			priceRange.setGap(10);
 		} else if (gap < 100) {
-			priceRange.setGap(gap / 10 * 10);
+			gap = Math.round(gap / 10) * 10;
+			priceRange.setGap((int) gap);
 		} else if (gap < 1000) {
-			priceRange.setGap(gap / 100 * 100);
+			gap = Math.round(gap / 100) * 100;
+			priceRange.setGap((int) gap);
 		} else {
-			priceRange.setGap(gap / 1000 * 1000);
+			gap = Math.round(gap / 1000) * 1000;
+			priceRange.setGap((int) gap);
 		}
 		
 		return priceRange;

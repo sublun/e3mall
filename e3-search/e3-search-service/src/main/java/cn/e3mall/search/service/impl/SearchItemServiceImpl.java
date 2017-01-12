@@ -38,7 +38,7 @@ public class SearchItemServiceImpl implements SearchItemService {
 			SolrInputDocument document = new SolrInputDocument();
 			//向文档中添加域
 			document.addField("id", searchItem.getId());
-			document.addField("goods_name", searchItem.getGoods_name());
+			document.addField("goods_name", searchItem.getItem_name());
 			document.addField("goods_ad_word", searchItem.getAd_word());
 			document.addField("goods_sell_price", searchItem.getSell_price());
 			document.addField("goods_img_url", searchItem.getImg_url());

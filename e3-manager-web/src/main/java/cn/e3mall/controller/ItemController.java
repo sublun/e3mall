@@ -35,14 +35,16 @@ public class ItemController {
 	@RequestMapping("/item/list")
 	@ResponseBody
 	public EasyUIDataGridResult getItemList(Integer page, Integer rows) {
-		EasyUIDataGridResult result = itemService.getItemList(page, rows);
-		return result;
+		/*EasyUIDataGridResult result = itemService.getItemList(page, rows);
+		return result;*/
+		return null;
 	}
 	
 	@RequestMapping("/item/save")
 	@ResponseBody
 	public E3Result addItem(TbItem item, String desc) {
-		E3Result result = itemService.addItem(item, desc);
-		return result;
+		/*E3Result result = itemService.addItem(item, desc);
+		return result;*/
+		return null;
 	}
 }

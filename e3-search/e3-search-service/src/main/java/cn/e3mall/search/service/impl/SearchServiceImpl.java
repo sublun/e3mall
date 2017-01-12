@@ -59,18 +59,24 @@ public class SearchServiceImpl implements SearchService {
 		}
 		query.setStart((page - 1) * searchInfo.getRows());
 		query.setRows(searchInfo.getRows());
-		query.set("df", "item_title");
+		query.set("df", "goods_name");
 		
 		//排序设置
 		if (StringUtils.isNotBlank(searchInfo.getSort())) {
 			String sort = searchInfo.getSort();
 			String[] split = sort.split("-");
-			query.setSort(split[0], "asc".equals(split[1])?ORDER.asc:ORDER.desc);
+			String sortField = "";
+			if ("sellnum".equals(split[0])) {
+				sortField = "goods_sell_num";
+			} else if ("price".equals(split[0])) {
+				sortField = "goods_sell_price";
+			}
+			query.setSort(sortField, "asc".equals(split[1])?ORDER.asc:ORDER.desc);
 		}
 		
 		//设置高亮
 		query.setHighlight(true);
-		query.addHighlightField("item_title");
+		query.addHighlightField("goods_name");
 		query.setHighlightSimplePre("<font style=\"color:red\">");
 		query.setHighlightSimplePost("</font>");
 		//调用dao执行查询
